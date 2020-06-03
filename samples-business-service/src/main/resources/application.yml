@@ -1,0 +1,60 @@
+server:
+  port: 8104
+
+spring:
+  application:
+    name: samples-business-service
+  main:
+    allow-bean-definition-overriding: true
+  cloud:
+    nacos:
+      username: nacos
+      password: nacos
+      discovery:
+        enabled: true
+        register-enabled: true
+        server-addr: 127.0.0.1:8848
+    alibaba:
+      seata:
+        tx-service-group: my_test_tx_group
+
+dubbo:
+  application:
+    name: ${spring.application.name}
+  protocol:
+    id: dubbo
+    name: dubbo
+    port: -1
+  registry:
+    id: ${spring.application.name}
+    address: spring-cloud://localhost
+#  config-center:
+#    address: nacos://127.0.0.1:8848
+#  metadata-report:
+#    address: nacos://127.0.0.1:8848
+  cloud:
+    subscribed-services: samples-storage-service,samples-order-service
+  consumer:
+    check: false
+
+seata:
+  enabled: true
+  tx-service-group: my_test_tx_group
+  service:
+    vgroupMapping:
+      my_test_tx_group: default
+    grouplist:
+      default: 127.0.0.1:8091
+    enable-degrade: false
+    disable-global-transaction: false
+  registry:
+    type: nacos
+    nacos:
+      server-addr: localhost
+      namespace:
+  config:
+    type: nacos
+    nacos:
+      namespace:
+      serverAddr: localhost
+      group: SEATA_GROUP

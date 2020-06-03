@@ -1,0 +1,76 @@
+server:
+  port: 8102
+
+spring:
+  application:
+    name: samples-account-service
+  main:
+    allow-bean-definition-overriding: true
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/seata?useSSL=false&useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true
+    username: root
+    password: root
+  cloud:
+    nacos:
+      username: nacos
+      password: nacos
+      discovery:
+        enabled: true
+        register-enabled: true
+        server-addr: 127.0.0.1:8848
+    alibaba:
+      seata:
+        tx-service-group: my_test_tx_group
+
+dubbo:
+  application:
+    name: ${spring.application.name}
+  scan:
+    base-packages: com.samples.integration.account.dubbo
+  protocol:
+    id: dubbo
+    name: dubbo
+    port: -1
+  registry:
+    id: ${spring.application.name}
+    address: spring-cloud://localhost
+#  config-center:
+#    address: nacos://127.0.0.1:8848
+#  metadata-report:
+#    address: nacos://127.0.0.1:8848
+  cloud:
+    subscribed-services:
+  consumer:
+    check: false
+
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/**/*.xml
+  typeAliasesPackage: com.samples.integration.account.*.entity
+  configuration:
+    map-underscore-to-camel-case: true
+  global-config:
+    db-config:
+      id-type: auto
+
+seata:
+  enabled: true
+  tx-service-group: my_test_tx_group
+  service:
+    vgroupMapping:
+      my_test_tx_group: default
+    grouplist:
+      default: 127.0.0.1:8091
+    enable-degrade: false
+    disable-global-transaction: false
+  registry:
+    type: nacos
+    nacos:
+      server-addr: localhost
+      namespace:
+  config:
+    type: nacos
+    nacos:
+      namespace:
+      serverAddr: localhost
+      group: SEATA_GROUP
