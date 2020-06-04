@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>net.ameizi</groupId>
-        <artifactId>cloud-dubbo-nacos-seata-example</artifactId>
+        <artifactId>springcloud-alibaba-example</artifactId>
         <version>1.0.0</version>
     </parent>
     <groupId>com.samples</groupId>

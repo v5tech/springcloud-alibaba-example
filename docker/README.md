@@ -1,4 +1,4 @@
-# nacos整合seata、mysql、sentinel、sentinel-dashboard
+# nacos整合seata、mysql、sentinel-dashboard
 
 环境版本：
 
